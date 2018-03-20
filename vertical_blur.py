@@ -1,0 +1,33 @@
+filename = "colors"
+o_w = 256
+o_h = 256
+file_variable = open(filename+".ppm")
+x = file_variable.readlines()
+file_variable.close()
+mylist = x[3:]
+newfile = []
+
+width = o_w
+height = o_h // 2
+
+for i in range(int(height)):
+    for j in range(int(width)):
+        r1 = i * width * 3 * 2 + 3 * j
+        g1 = r1 + 1
+        b1 = r1 + 2
+        r2 = i * width * 3 * 2 + 3 * j + 3 * width
+        g2 = r2 + 1     
+        b2 = r2 + 2
+        newfile.append((int(mylist[r1]) + int(mylist[r2])) / 2)
+        newfile.append((int(mylist[g1]) + int(mylist[g2])) / 2)
+        newfile.append((int(mylist[b1]) + int(mylist[b2])) / 2)
+        
+
+outfile = open(filename+"1.ppm","w")
+outfile.write("P3\n")
+outfile.write("256 128\n")
+outfile.write("255\n")
+for i in newfile:
+    outfile.write(str(int(i)))
+    outfile.write("\n")
+outfile.close()
